@@ -1,16 +1,16 @@
-from model import efficientdet
+from EfficientDet.model import efficientdet
 import cv2
 import os
 import numpy as np
 import time
-from utils import preprocess_image
-from utils.anchors import anchors_for_shape
+from EfficientDet.utils import preprocess_image
+from EfficientDet.utils.anchors import anchors_for_shape
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 phi = 1
 weighted_bifpn = False
-model_path = 'checkpoints/2019-12-03/pascal_05_0.6283_1.1975_0.8029.h5'
+model_path = 'EfficientDet-d1.weights'
 image_sizes = (512, 640, 768, 896, 1024, 1280, 1408)
 image_size = image_sizes[phi]
 classes = [
@@ -26,7 +26,7 @@ model, prediction_model = efficientdet(phi=phi,
                                        score_threshold=score_threshold)
 prediction_model.load_weights(model_path, by_name=True)
 
-image_path = 'datasets/VOC2007/JPEGImages/000002.jpg'
+image_path = 'sample.jpg'
 image = cv2.imread(image_path)
 src_image = image.copy()
 image = image[:, :, ::-1]
